@@ -24,7 +24,7 @@ resource "aws_route53_record" "a_record_root" {
 }
 
 resource "aws_route53_record" "a_record_www" {
-  count = (var.need_www_redirect) ? 1 : 0
+  count = (var.need_www_subdomain) ? 1 : 0
 
   zone_id = (var.hosted_zone_id != null) ? data.aws_route53_zone.by_id[0].zone_id : data.aws_route53_zone.by_name[0].zone_id
   name    = local.www_domain_name

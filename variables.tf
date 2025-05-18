@@ -18,10 +18,10 @@ variable "hosted_zone_id" {
   description = "Id of the Hosted Zone in Route 53"
 }
 
-variable "need_www_redirect" {
+variable "need_www_subdomain" {
   type        = bool
   default     = false
-  description = "Whether redirect from wwww required or not. If yes, this module will create 2 sites with domain_name.com and www.domain_name.com"
+  description = "Whether the wwww subdomain required or not. If yes, this module will add 2 records in Route 53 with domain_name.com and www.domain_name.com"
 }
 
 variable "ec2_public_ipv4_dns" {
@@ -41,22 +41,6 @@ variable "default_root_object" {
   default     = "index.html"
   description = "Default root object for the website"
 }
-
-# variable "s3_access_method" {
-#   type = string
-#   default = "public"
-#   description = "Access method for S3: OAC/OAI/public"
-#   validation {
-#     condition     = contains(["oac", "oai", "public"], lower(var.s3_access_method))
-#     error_message = "Unsupported method <${var.s3_access_method}>. Supported values are <OAC, OAI, public>"
-#   }  
-# }
-
-# variable "website_source_folder" {
-#   type        = string
-#   default     = null
-#   description = "Source folder of your website build"
-# }
 
 variable "tags" {
   type = map(any)

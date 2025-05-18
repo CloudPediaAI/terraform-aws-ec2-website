@@ -4,6 +4,6 @@ output "cloudfront" {
 }
 
 output "website_url" {
-  value       = "https://${local.domain_name}"
+  value       = local.domain_urls
   description = "URL of the EC2 Website"
 }

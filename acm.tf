@@ -2,7 +2,7 @@ resource "aws_acm_certificate" "root" {
   provider                  = aws.us-east-1
   domain_name               = local.domain_name
   validation_method         = "DNS"
-  # subject_alternative_names = [local.www_domain_name]
+  subject_alternative_names = (var.need_www_subdomain) ? [local.www_domain_name] : null
 
   tags = var.tags
 
