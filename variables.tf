@@ -42,10 +42,16 @@ variable "default_root_object" {
   description = "Default root object for the website"
 }
 
+variable "ec2_security_group_id" {
+  type = string
+  default = null
+  description = "Security group id of the EC2 instance. If provided, Security Group Inbound Rule will be created to allow CloudFront to access the Website on the EC2 instance"
+}
+
 variable "tags" {
   type = map(any)
   description = "Key/Value pairs for the tags"
   default = {
-    created_by = "Terraform Module cloudpediaai/static-website/aws"
+    created_by = "Terraform Module cloudpediaai/ec2-website/aws"
   }
 }
