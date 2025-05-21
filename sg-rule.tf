@@ -1,3 +1,4 @@
+# To limit access to EC2 port using the AWS-managed prefix list for Amazon CloudFront
 data "aws_ec2_managed_prefix_list" "cloudfront" {
   name = "com.amazonaws.global.cloudfront.origin-facing"
 }

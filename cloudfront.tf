@@ -1,3 +1,13 @@
+# (Recommended for EC2) Policy for origins that return Cache-Control headers. Query strings are not included in the cache key.
+data "aws_cloudfront_cache_policy" "cache_control_headers" {
+  name = "UseOriginCacheControlHeaders"
+}
+
+# (Recommended for EC2) Policy to forward all parameters in viewer requests
+data "aws_cloudfront_origin_request_policy" "managed_all_viewer" {
+  name = "Managed-AllViewer"
+}
+
 resource "aws_cloudfront_distribution" "public" {
   origin {
     domain_name = var.ec2_public_ipv4_dns
@@ -12,47 +22,24 @@ resource "aws_cloudfront_distribution" "public" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "CloudFront for Website hosted on EC2"
+  comment             = "CloudFront for Website ${var.domain_name} hosted on EC2"
   default_root_object = var.default_root_object
 
   aliases = local.domain_aliases
 
-  custom_error_response {
-    error_caching_min_ttl = 10
-    error_code            = 404
-    response_code         = 200
-    response_page_path    = "/index.html"
-  }
-
-  custom_error_response {
-    error_caching_min_ttl = 10
-    error_code            = 403
-    response_code         = 200
-    response_page_path    = "/index.html"
-  }
-
   default_cache_behavior {
+    cache_policy_id          = data.aws_cloudfront_cache_policy.cache_control_headers.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_all_viewer.id
+
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "EC2-${var.domain_name}"
-
-    forwarded_values {
-      query_string = true
-
-      cookies {
-        forward = "none"
-      }
-
-      headers = ["Origin"]
-    }
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000
   }
-
-  # web_acl_id
 
   restrictions {
     geo_restriction {
