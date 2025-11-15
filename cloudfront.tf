@@ -36,9 +36,6 @@ resource "aws_cloudfront_distribution" "public" {
     target_origin_id = "EC2-${var.domain_name}"
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
   }
 
   restrictions {
@@ -53,5 +50,7 @@ resource "aws_cloudfront_distribution" "public" {
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  tags = var.tags
+  tags = merge(var.tags, {
+    Name = var.domain_name
+  })
 }
