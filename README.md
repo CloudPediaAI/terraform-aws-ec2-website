@@ -26,5 +26,5 @@ This Terraform Module will create all required AWS resources to establish a perm
 # Release Notes
 
 ## v1.2.1
-Refer [Changelog](CHANGELOG.md)
+Refer [Changelog](CHANGELOG.md#v121---2025-11-14)
 
