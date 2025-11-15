@@ -22,3 +22,9 @@ This Terraform Module will create all required AWS resources to establish a perm
 - [Documentation](https://cloudpedia.ai/terraform-module/aws-website-redirect/)
 - [Terraform Module](https://registry.terraform.io/modules/cloudpediaai/website-redirect/aws/latest)
 - [GitHub Repo](https://github.com/CloudPediaAI/terraform-aws-website-redirect)
+
+# Release Notes
+
+## v1.2.1
+Refer [Changelog](CHANGELOG.md)
+
